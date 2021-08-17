@@ -35,12 +35,11 @@ public class EmployeeModel {
                 System.err.println("Connection error!");
                 return false;
             }
-            PreparedStatement stt = cnn.prepareStatement("select account from employees");
+            PreparedStatement stt = cnn.prepareStatement("select account from employees where account = ?");
+            stt.setString(1, account);
             ResultSet rs = stt.executeQuery();
-            while (rs.next()) {
-                if (account.equals(rs.getString(1))) {
-                    return true;
-                }
+            if (rs.next()) {
+                return true;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
